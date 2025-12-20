@@ -23,6 +23,31 @@ def generar_comida(serpiente):
 
 comida = generar_comida(serpiente)
 
+def dibujar_mapa(serpiente, comida):
+    print("\n" * 5)  # "limpia" la pantalla (simple)
+
+    # Borde superior
+    print("#" * (MAP_ANCHO + 2))
+
+    for y in range(MAP_ALTO):
+        fila = "#"
+        for x in range(MAP_ANCHO):
+
+            if (x, y) == serpiente[0]:
+                fila += "@"
+            elif (x, y) in serpiente:
+                fila += "O"
+            elif (x, y) == comida:
+                fila += "*"
+            else:
+                fila += " "
+
+        fila += "#"
+        print(fila)
+
+    # Borde inferior
+    print("#" * (MAP_ANCHO + 2))
+
 # --- CONTROL DEL TECLADO ---
 def presionar(key):
     global direccion
@@ -84,7 +109,9 @@ while True:
         
     else:
         serpiente.pop()  # quitar la cola (solo si no comió)
+
+    dibujar_mapa(serpiente, comida)
     time.sleep(velocidad)
 
 listener.stop()
-print("Game Over") 
+print("Game Over")
